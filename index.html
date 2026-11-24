@@ -1,94 +1,148 @@
-<!doctype html>
+from pathlib import Path
+import zipfile, textwrap
+
+out = Path("/mnt/data/unique_vision_free_website")
+out.mkdir(exist_ok=True)
+
+html = r'''<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Unique Vision Eye Clinic & Opticals — eye examinations, vision care and optical solutions in Hyderabad.">
-  <meta name="theme-color" content="#082b55">
-  <title>Unique Vision Eye Clinic & Opticals</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="theme-color" content="#073b72">
+  <meta name="description" content="UNIQUE VISION EYE CLINIC & OPTICALS — eye examinations, refraction, prescription eyewear and optical solutions in Hyderabad.">
+  <title>UNIQUE VISION EYE CLINIC & OPTICALS | Clear Vision. Confident Living.</title>
+  <style>
+    :root{--navy:#073b72;--blue:#1268b3;--sky:#eaf5ff;--gold:#c99b42;--ink:#142b43;--muted:#62758a;--white:#fff;--line:#dce8f3;--shadow:0 18px 50px rgba(7,59,114,.11);--radius:24px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#fbfdff;line-height:1.6}
+    a{color:inherit;text-decoration:none}.container{width:min(1140px,92%);margin:auto}
+    .topbar{background:var(--navy);color:#eaf5ff;font-size:13px;padding:8px 0}.topbar .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+    .nav{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:22px}.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.04em;color:var(--navy);line-height:1.15}.brand small{display:block;font-size:10px;letter-spacing:.18em;color:var(--muted);font-weight:700;margin-top:5px}
+    .brandmark{width:46px;height:46px;border-radius:15px;background:linear-gradient(145deg,#0b4c88,#1684cb);display:grid;place-items:center;color:#fff;box-shadow:0 8px 20px #1268b333}
+    .brandmark svg{width:29px}.links{display:flex;align-items:center;gap:24px;font-size:14px;font-weight:650;color:#3b5268}.links a:hover{color:var(--blue)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 20px;border-radius:999px;background:var(--blue);color:#fff;font-weight:750;border:0;cursor:pointer;box-shadow:0 9px 22px #1268b333;transition:.2s}.btn:hover{transform:translateY(-2px);background:var(--navy)}.btn.secondary{background:#fff;color:var(--navy);border:1px solid var(--line);box-shadow:none}
+    .menu{display:none;border:1px solid var(--line);background:white;border-radius:12px;padding:9px 12px;font-size:20px;color:var(--navy)}
+    .hero{padding:76px 0 66px;overflow:hidden;background:radial-gradient(circle at 82% 35%,#d8efff 0,transparent 31%),linear-gradient(120deg,#f5fbff,#fff 55%,#edf7ff)}
+    .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:52px}.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--blue);font-size:12px;letter-spacing:.17em;font-weight:850;text-transform:uppercase}.eyebrow:before{content:"";width:28px;height:2px;background:var(--gold)}
+    h1{font-size:clamp(40px,5.4vw,66px);line-height:1.05;letter-spacing:-.045em;color:var(--navy);margin:18px 0}.hero h1 span{color:var(--blue)}.lead{font-size:18px;color:var(--muted);max-width:580px}.actions{display:flex;gap:13px;flex-wrap:wrap;margin:28px 0}.checks{display:flex;gap:20px;flex-wrap:wrap;color:#466078;font-size:13px;font-weight:650}.checks span:before{content:"✓";color:#14875c;font-weight:900;margin-right:7px}
+    .visual{position:relative;min-height:390px;display:grid;place-items:center}.visual-card{width:min(440px,100%);aspect-ratio:1.08;border-radius:38px;background:linear-gradient(145deg,#0b4c88,#0c70b8 65%,#5eb6e8);box-shadow:0 30px 70px #073b7233;position:relative;overflow:hidden;display:grid;place-items:center}.visual-card:before,.visual-card:after{content:"";position:absolute;border:1px solid #ffffff33;border-radius:50%;width:390px;height:390px}.visual-card:after{width:500px;height:500px}.eye-art{position:relative;z-index:1;width:78%;filter:drop-shadow(0 18px 20px #002a5555)}.visual-tag{position:absolute;z-index:2;bottom:26px;left:26px;background:#fff;color:var(--navy);padding:13px 18px;border-radius:16px;font-weight:800;box-shadow:var(--shadow)}.visual-tag small{display:block;color:var(--muted);font-size:11px;font-weight:600}
+    .trust{padding:22px 0;background:white;border-bottom:1px solid var(--line)}.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.trust-item{display:flex;align-items:center;gap:13px;justify-content:center}.trust-icon{width:42px;height:42px;border-radius:14px;background:var(--sky);color:var(--blue);display:grid;place-items:center;font-size:20px}.trust-item b{display:block;color:var(--navy);font-size:14px}.trust-item small{color:var(--muted);font-size:12px}
+    section{padding:82px 0}.section-head{text-align:center;max-width:690px;margin:0 auto 42px}.section-head .eyebrow{justify-content:center}.section-head h2{font-size:clamp(30px,4vw,43px);line-height:1.13;letter-spacing:-.035em;color:var(--navy);margin:14px 0}.section-head p{color:var(--muted);margin:0}
+    .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:55px;align-items:center}.about-panel{background:linear-gradient(145deg,#eaf5ff,#f8fcff);padding:38px;border-radius:var(--radius);border:1px solid #d9eafa}.about-symbol{width:64px;height:64px;border-radius:20px;background:white;color:var(--blue);display:grid;place-items:center;font-size:30px;box-shadow:var(--shadow)}.about-panel h3{font-size:27px;color:var(--navy);line-height:1.2;margin:22px 0 10px}.about-panel p,.about-copy p{color:var(--muted)}.about-copy h2{font-size:38px;line-height:1.13;color:var(--navy);letter-spacing:-.04em;margin:12px 0 18px}.doctor{border-left:3px solid var(--gold);padding:8px 0 8px 17px;margin-top:24px}.doctor b{display:block;color:var(--navy)}.doctor span{font-size:13px;color:var(--muted)}
+    .services{background:#f4f9fe}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.service{padding:27px;background:white;border:1px solid var(--line);border-radius:20px;transition:.2s}.service:hover{transform:translateY(-5px);box-shadow:var(--shadow)}.service .ico{width:49px;height:49px;border-radius:15px;background:var(--sky);display:grid;place-items:center;color:var(--blue);font-size:23px}.service h3{color:var(--navy);font-size:18px;margin:17px 0 7px}.service p{color:var(--muted);font-size:14px;margin:0}
+    .optical-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}.optical-art{min-height:300px;border-radius:28px;background:linear-gradient(145deg,#e7f4ff,#cde8fb);display:grid;place-items:center;overflow:hidden}.glasses{width:78%;max-width:420px}.optical-copy h2{font-size:38px;line-height:1.12;color:var(--navy);margin:12px 0}.optical-copy p{color:var(--muted)}
+    .booking{background:linear-gradient(135deg,#073b72,#0b5b9d);color:white}.booking .section-head h2,.booking .section-head p{color:white}.booking .eyebrow{color:#f4d28b}.booking-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:38px;align-items:start}.booking-note{padding:28px;border:1px solid #ffffff30;border-radius:22px;background:#ffffff0d}.booking-note h3{font-size:24px;margin:0 0 12px}.booking-note p{color:#d9eafa}.booking-note a{color:#ffdf9a;text-decoration:underline}.form-card{background:white;color:var(--ink);padding:30px;border-radius:24px;box-shadow:0 25px 60px #00274c55}.form-card h3{color:var(--navy);margin:0 0 20px;font-size:23px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:750;color:#3b5268}.field input,.field select,.field textarea{width:100%;border:1px solid #d7e3ee;border-radius:11px;padding:12px 13px;font:inherit;font-size:14px;color:var(--ink);background:#fbfdff;outline:none}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #1268b31a}.field textarea{min-height:85px;resize:vertical}.form-card .btn{width:100%;margin-top:18px}.hint{font-size:11px;color:#75879a;margin:10px 0 0}
+    .branches{background:#f5faff}.branch-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.branch{background:white;border:1px solid var(--line);border-radius:22px;padding:28px}.branch-label{font-size:11px;letter-spacing:.16em;color:var(--gold);font-weight:900}.branch h3{font-size:24px;color:var(--navy);margin:8px 0}.branch p{color:var(--muted);min-height:55px}.branch a.map{display:inline-flex;color:var(--blue);font-weight:800;font-size:14px;margin-top:8px}
+    .contact{padding:64px 0}.contact-card{background:linear-gradient(110deg,#eaf5ff,#f9fcff);border:1px solid var(--line);border-radius:28px;padding:38px;display:flex;align-items:center;justify-content:space-between;gap:25px}.contact-card h2{color:var(--navy);font-size:30px;margin:0 0 8px}.contact-card p{color:var(--muted);margin:0}.contact-links{display:flex;gap:12px;flex-wrap:wrap}
+    footer{background:#052e58;color:#d7e9f8;padding:38px 0 20px}.foot{display:flex;justify-content:space-between;gap:25px;flex-wrap:wrap}.foot b{color:white}.foot a{color:#d7e9f8}.foot small{color:#a9c5dc}.copyright{border-top:1px solid #ffffff20;margin-top:28px;padding-top:17px;font-size:12px;color:#a9c5dc}
+    .wa-float{position:fixed;right:20px;bottom:20px;z-index:30;width:58px;height:58px;border-radius:50%;background:#159b68;color:white;display:grid;place-items:center;font-weight:900;box-shadow:0 12px 30px #003c2866;border:3px solid white}
+    @media(max-width:850px){.links{display:none;position:absolute;top:78px;left:0;right:0;background:white;padding:18px 5%;border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start}.links.open{display:flex}.menu{display:block}.nav>.btn{display:none}.hero-grid,.about-grid,.optical-grid,.booking-grid{grid-template-columns:1fr}.hero{padding:52px 0}.visual{min-height:310px}.visual-card{max-width:390px}.cards{grid-template-columns:repeat(2,1fr)}.about-grid{gap:28px}.booking-grid{gap:20px}}
+    @media(max-width:560px){.topbar .container{justify-content:center;text-align:center}.brand{font-size:13px}.brandmark{width:41px;height:41px}.hero h1{font-size:42px}.lead{font-size:16px}.trust-grid{grid-template-columns:1fr;gap:13px}.trust-item{justify-content:flex-start}.cards,.branch-grid,.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}section{padding:62px 0}.about-panel{padding:27px}.about-copy h2,.optical-copy h2{font-size:32px}.contact-card{padding:27px;align-items:flex-start;flex-direction:column}.form-card{padding:22px}.visual{min-height:275px}}
+  </style>
 </head>
 <body>
-<header class="site-header">
-  <a class="brand" href="#home" aria-label="Unique Vision home">
-    <span class="brand-mark">UV</span><span><strong>UNIQUE VISION</strong><small>EYE CLINIC & OPTICALS</small></span>
-  </a>
-  <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-  <nav class="nav">
-    <a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#opticals">Opticals</a><a href="#branches">Branches</a><a class="nav-cta" href="#appointment">Book Appointment</a>
-  </nav>
-</header>
+  <div class="topbar"><div class="container"><span>Professional eye care · Hyderabad, Telangana</span><span>Call / WhatsApp: +91 85558 08382</span></div></div>
+  <header><div class="container nav">
+    <a class="brand" href="#home" aria-label="Unique Vision home"><span class="brandmark"><svg viewBox="0 0 40 28" fill="none" aria-hidden="true"><path d="M2 14S8 3 20 3s18 11 18 11-6 11-18 11S2 14 2 14Z" stroke="white" stroke-width="2.2"/><circle cx="20" cy="14" r="6" stroke="white" stroke-width="2.2"/><circle cx="20" cy="14" r="2.3" fill="#f5d58d"/></svg></span><span>UNIQUE VISION<small>EYE CLINIC & OPTICALS</small></span></a>
+    <nav class="links" id="navlinks"><a href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#opticals">Opticals</a><a href="#branches">Branches</a><a href="#booking">Appointments</a></nav>
+    <a class="btn" href="#booking">Book an appointment</a><button class="menu" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+  </div></header>
+  <main>
+    <section class="hero" id="home"><div class="container hero-grid">
+      <div><div class="eyebrow">Your vision matters</div><h1>See the world<br><span>more clearly.</span></h1><p class="lead">Thoughtful eye care, professional vision testing and optical solutions for your everyday life.</p>
+        <div class="actions"><a class="btn" href="#booking">Book an appointment <span>→</span></a><a class="btn secondary" href="#services">Explore our services</a></div>
+        <div class="checks"><span>Eye examination</span><span>Prescription eyewear</span><span>Friendly service</span></div>
+      </div>
+      <div class="visual"><div class="visual-card">
+        <svg class="eye-art" viewBox="0 0 520 330" fill="none" aria-label="Decorative eye illustration"><path d="M28 165C83 72 168 28 260 28s177 44 232 137c-55 93-140 137-232 137S83 258 28 165Z" fill="#F7FBFF" fill-opacity=".96"/><circle cx="260" cy="165" r="91" fill="#8CC8EA"/><circle cx="260" cy="165" r="67" fill="#1268A7"/><circle cx="260" cy="165" r="39" fill="#092F58"/><circle cx="287" cy="136" r="17" fill="white" fill-opacity=".9"/><path d="M28 165C83 72 168 28 260 28s177 44 232 137c-55 93-140 137-232 137S83 258 28 165Z" stroke="#D7EEFF" stroke-width="5"/></svg>
+        <div class="visual-tag">SEE WELL. LIVE WELL.<small>Care with clarity</small></div>
+      </div></div>
+    </div></section>
+    <div class="trust"><div class="container trust-grid">
+      <div class="trust-item"><span class="trust-icon">◎</span><div><b>Professional care</b><small>Personal attention at every visit</small></div></div>
+      <div class="trust-item"><span class="trust-icon">◇</span><div><b>Optical solutions</b><small>Frames and lenses for your needs</small></div></div>
+      <div class="trust-item"><span class="trust-icon">✓</span><div><b>Easy appointments</b><small>Request a visit on WhatsApp</small></div></div>
+    </div></div>
+    <section id="about"><div class="container about-grid">
+      <div class="about-panel"><div class="about-symbol">◉</div><h3>Care that keeps your world in focus.</h3><p>Eye care and optical services in one welcoming place.</p></div>
+      <div class="about-copy"><div class="eyebrow">About Unique Vision</div><h2>Clear advice.<br>Thoughtful eye care.</h2><p>UNIQUE VISION EYE CLINIC & OPTICALS is focused on helping individuals and families care for their eyesight. We bring eye examination services and optical products together in a welcoming clinic environment.</p><p>Our aim is to make eye care clear, convenient and accessible. Contact us to ask about services, availability and appointments.</p><div class="doctor"><b>SAYEED BIN WAJID BAWAZEER</b><span>D. Optometrist · 7 years of optometry experience</span></div></div>
+    </div></section>
+    <section class="services" id="services"><div class="container"><div class="section-head"><div class="eyebrow">What we offer</div><h2>Eye care for every day</h2><p>Ask our team which service is appropriate for your needs.</p></div>
+      <div class="cards">
+        <article class="service"><div class="ico">◉</div><h3>Comprehensive eye testing</h3><p>Vision assessment and eye-power evaluation.</p></article>
+        <article class="service"><div class="ico">＋</div><h3>Refraction & prescription</h3><p>Assessment to help determine your spectacle prescription.</p></article>
+        <article class="service"><div class="ico">◎</div><h3>Optical frames</h3><p>Explore frame styles and get help choosing a suitable fit.</p></article>
+        <article class="service"><div class="ico">◇</div><h3>Lenses & accessories</h3><p>Ask about lens options and everyday optical accessories.</p></article>
+        <article class="service"><div class="ico">⌖</div><h3>Visual acuity assessment</h3><p>Distance and near vision assessment as part of an eye-care visit.</p></article>
+        <article class="service"><div class="ico">✧</div><h3>Refraction support</h3><p>Objective and subjective refraction assessment, where appropriate.</p></article>
+      </div></div></section>
+    <section id="opticals"><div class="container optical-grid">
+      <div class="optical-art"><svg class="glasses" viewBox="0 0 500 230" fill="none" aria-label="Decorative eyeglasses illustration"><path d="M25 68h45l16 83c8 39 36 58 76 58 45 0 74-28 80-72l9-68h-1l9 68c6 44 35 72 80 72 40 0 68-19 76-58l16-83h44" stroke="#0B4D86" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/><path d="M242 74c5-12 11-18 19-18s14 6 19 18" stroke="#0B4D86" stroke-width="12" stroke-linecap="round"/><path d="M83 83c17-19 42-28 74-28 35 0 64 11 82 34M261 89c18-23 47-34 82-34 32 0 57 9 74 28" stroke="#5BA7D8" stroke-width="5" stroke-linecap="round"/></svg></div>
+      <div class="optical-copy"><div class="eyebrow">At our opticals</div><h2>Find your perfect pair.</h2><p>From everyday eyewear to lens options, our optical team can help you explore choices that suit your prescription, comfort and preferences.</p><a class="btn" href="https://wa.me/918555808382?text=Hello%20Unique%20Vision%2C%20I%20would%20like%20to%20enquire%20about%20frames%20and%20lenses." target="_blank" rel="noopener">Enquire on WhatsApp →</a></div>
+    </div></section>
+    <section class="booking" id="booking"><div class="container"><div class="section-head"><div class="eyebrow">Visit Unique Vision</div><h2>Request an appointment</h2><p>Fill in the details and continue to WhatsApp. Your request is sent only when you press the WhatsApp button.</p></div>
+      <div class="booking-grid"><div class="booking-note"><h3>We're here to help.</h3><p>Choose your preferred branch and tell us what you need. Our team can respond to confirm availability.</p><p><b>Call / WhatsApp</b><br><a href="tel:+918555808382">+91 85558 08382</a></p><p><b>Email</b><br><a href="mailto:uniquevisioneye@gmail.com">uniquevisioneye@gmail.com</a></p></div>
+        <form class="form-card" id="appointmentForm"><h3>Appointment details</h3><div class="form-grid">
+          <div class="field"><label for="fullName">Full name *</label><input id="fullName" name="name" required placeholder="Enter your name"></div>
+          <div class="field"><label for="mobile">Mobile number *</label><input id="mobile" name="mobile" type="tel" inputmode="numeric" pattern="[0-9+\s-]{10,15}" required placeholder="Your contact number"></div>
+          <div class="field"><label for="branch">Preferred branch *</label><select id="branch" name="branch" required><option value="">Choose a branch</option><option>Aliabad</option><option>Barkas – Near Peeli Dargah</option></select></div>
+          <div class="field"><label for="date">Preferred date</label><input id="date" name="date" type="date"></div>
+          <div class="field full"><label for="service">What do you need?</label><select id="service" name="service"><option>Eye examination</option><option>Eye-power check</option><option>Frames / spectacles</option><option>Lenses / optical enquiry</option><option>Other enquiry</option></select></div>
+          <div class="field full"><label for="note">Additional note</label><textarea id="note" name="note" placeholder="Add any details (optional)"></textarea></div>
+        </div><button class="btn" type="submit">Send appointment request on WhatsApp →</button><p class="hint">WhatsApp will open with your details. Review the message and press Send to submit your request.</p></form>
+      </div></div>
+    </section>
+    <section class="branches" id="branches"><div class="container"><div class="section-head"><div class="eyebrow">Find us</div><h2>Our clinic locations</h2><p>Please contact us to confirm opening hours before visiting.</p></div>
+      <div class="branch-grid">
+        <article class="branch"><div class="branch-label">BRANCH 01</div><h3>Aliabad</h3><p>Near Aliabad Jhanda, beside Sardar Pan Shop, Hyderabad, Telangana 500065, India.</p><a class="map" href="https://maps.app.goo.gl/WnrZyj3w8fr3St4A6" target="_blank" rel="noopener">Open in Google Maps ↗</a></article>
+        <article class="branch"><div class="branch-label">BRANCH 02</div><h3>Barkas</h3><p>Beside Safia Hospital, opposite Fashion Freedom, Near Peeli Dargah, Salalah, Barkas, Hyderabad, Telangana 500005, India.</p><a class="map" href="https://maps.app.goo.gl/BbQ8kZG4db479jTT6" target="_blank" rel="noopener">Open in Google Maps ↗</a></article>
+      </div></div>
+    </section>
+    <section class="contact"><div class="container"><div class="contact-card"><div><h2>Have a question?</h2><p>Call or WhatsApp us for appointments and enquiries.</p></div><div class="contact-links"><a class="btn" href="https://wa.me/918555808382" target="_blank" rel="noopener">WhatsApp us</a><a class="btn secondary" href="tel:+918555808382">Call clinic</a></div></div></div></section>
+  </main>
+  <footer><div class="container"><div class="foot"><div><b>UNIQUE VISION EYE CLINIC & OPTICALS</b><br><small>Clear Vision. Confident Living.</small></div><div><a href="tel:+918555808382">+91 85558 08382</a><br><a href="mailto:uniquevisioneye@gmail.com">uniquevisioneye@gmail.com</a></div><div><a href="https://www.instagram.com/uniquevisioneye/" target="_blank" rel="noopener">Instagram @uniquevisioneye</a><br><a href="#booking">Request an appointment</a></div></div><div class="copyright">Managed by SAYEED BIN WAJID BAWAZEER · D. Optometrist<br>© <span id="year"></span> UNIQUE VISION EYE CLINIC & OPTICALS. All rights reserved. Website information is general; consult an eye-care professional for individual advice.</div></div></footer>
+  <a class="wa-float" href="https://wa.me/918555808382" target="_blank" rel="noopener" aria-label="Chat with Unique Vision on WhatsApp">WA</a>
+  <script>
+    const menuBtn=document.getElementById('menuBtn'),nav=document.getElementById('navlinks');
+    menuBtn.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open));});
+    nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');}));
+    document.getElementById('year').textContent=new Date().getFullYear();
+    document.getElementById('appointmentForm').addEventListener('submit',e=>{
+      e.preventDefault();const f=new FormData(e.currentTarget);
+      const message=['Appointment request — UNIQUE VISION EYE CLINIC & OPTICALS',`Name: ${f.get('name')}`,`Mobile: ${f.get('mobile')}`,`Preferred branch: ${f.get('branch')}`,`Preferred date: ${f.get('date')||'Not specified'}`,`Service: ${f.get('service')}`,`Note: ${f.get('note')||'None'}`,'','Please confirm availability. I understand this is a request, not a confirmed booking.'].join('\n');
+      window.open('https://wa.me/918555808382?text='+encodeURIComponent(message),'_blank','noopener');
+    });
+  </script>
+</body>
+</html>'''
 
-<main>
-<section class="hero" id="home">
-  <div class="hero-content">
-    <span class="eyebrow">CLEAR VISION. CONFIDENT LIVING.</span>
-    <h1>See the world<br><em>more clearly.</em></h1>
-    <p>Thoughtful eye care, professional vision testing and optical solutions for your everyday life.</p>
-    <div class="hero-actions"><a class="button gold" href="#appointment">Book an appointment</a><a class="button outline" href="#services">Explore our services</a></div>
-    <div class="trust-line"><span>✓ Eye examination</span><span>✓ Prescription eyewear</span><span>✓ Friendly service</span></div>
-  </div>
-  <div class="hero-art" aria-label="Decorative eye-care illustration">
-    <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-    <div class="eye-symbol"><div class="iris"><div class="pupil"></div><i></i></div></div>
-    <div class="art-caption"><b>YOUR VISION MATTERS</b><span>Care with clarity</span></div>
-  </div>
-</section>
+readme = """UNIQUE VISION — FREE GITHUB PAGES WEBSITE
 
-<section class="quick-strip"><div><b>Professional care</b><span>Personal attention at every visit</span></div><div><b>Optical solutions</b><span>Frames and lenses for your needs</span></div><div><b>Easy appointments</b><span>Request a visit on WhatsApp</span></div></section>
+Included:
+- index.html: complete responsive website (HTML, CSS and JavaScript in one file)
+- Uses your existing free GitHub Pages URL and WhatsApp appointment request flow.
+- No paid domain, hosting, plugin or external image service is required.
 
-<section class="section about" id="about">
-  <div class="section-art"><div class="lens-card"><span class="lens-icon">◉</span><b>VISION<br>CARE</b><small>SEE WELL. LIVE WELL.</small></div></div>
-  <div class="section-copy"><span class="eyebrow">ABOUT UNIQUE VISION</span><h2>Care that keeps<br><em>your world in focus.</em></h2>
-    <p>UNIQUE VISION EYE CLINIC & OPTICALS is focused on helping individuals and families care for their eyesight. We bring eye examination services and optical products together in a welcoming clinic environment.</p>
-    <p>Our aim is to make eye care clear, convenient and accessible. Contact us to ask about services, availability and appointments.</p>
-    <div class="owner-note"><strong>SAYEED BIN WAJID BAWAZEER</strong><span>D. Optometrist · 7 years of optometry experience</span></div>
-    <a class="text-link" href="#appointment">Plan your visit →</a>
-  </div>
-</section>
+IMPORTANT:
+This package is a ready-to-upload redesign. It has NOT been published to your GitHub repository yet.
 
-<section class="section services-section" id="services">
-  <div class="section-heading"><span class="eyebrow">WHAT WE OFFER</span><h2>Eye care for every day</h2><p>Ask our team which service is appropriate for your needs.</p></div>
-  <div class="service-grid">
-    <article class="service-card"><span class="service-icon">◉</span><h3>Comprehensive eye testing</h3><p>Vision assessment and eye-power evaluation.</p></article>
-    <article class="service-card"><span class="service-icon">＋</span><h3>Refraction & prescription</h3><p>Assessment to help determine your spectacle prescription.</p></article>
-    <article class="service-card"><span class="service-icon">◎</span><h3>Optical frames</h3><p>Explore frame styles and get help choosing a suitable fit.</p></article>
-    <article class="service-card"><span class="service-icon">◇</span><h3>Lenses & accessories</h3><p>Ask about lens options and everyday optical accessories.</p></article>
-    <article class="service-card"><span class="service-icon">⌖</span><h3>Visual acuity assessment</h3><p>Distance and near vision assessment as part of an eye-care visit.</p></article>
-    <article class="service-card"><span class="service-icon">✧</span><h3>Refraction support</h3><p>Objective and subjective refraction assessment, where appropriate.</p></article>
-  </div>
-</section>
+Publish it:
+1. Open https://github.com/sayeeduv/www.uveyeai.in
+2. Sign in to the GitHub account that owns the repository.
+3. Open the repository and choose Add file > Upload files.
+4. Upload index.html from this package.
+5. If GitHub asks whether to replace the existing index.html, review and confirm the replacement.
+6. Scroll down, enter a commit message such as "Refresh clinic website design", and choose Commit changes.
+7. Wait a minute, then open https://sayeeduv.github.io/www.uveyeai.in/
 
-<section class="opticals" id="opticals"><div class="optical-copy"><span class="eyebrow">AT OUR OPTICALS</span><h2>Find your<br><em>perfect pair.</em></h2><p>From everyday eyewear to lens options, our optical team can help you explore choices that suit your prescription, comfort and preferences.</p><a class="button gold" href="#appointment">Enquire on WhatsApp</a></div><div class="frames" aria-hidden="true"><div class="frame frame-one"></div><div class="frame frame-two"></div><div class="frame frame-three"></div></div></section>
-
-<section class="section appointment-section" id="appointment">
-  <div class="section-heading"><span class="eyebrow">VISIT UNIQUE VISION</span><h2>Request an appointment</h2><p>Fill in the details and continue to WhatsApp. Your request is sent only when you press the WhatsApp button.</p></div>
-  <form id="appointment-form" class="appointment-form">
-    <label>Full name<input name="name" autocomplete="name" required maxlength="80" placeholder="Enter your name"></label>
-    <label>Mobile number<input name="phone" type="tel" inputmode="tel" required maxlength="20" placeholder="Your contact number"></label>
-    <label>Preferred branch<select name="branch" required><option value="">Choose a branch</option><option>Aliabad</option><option>Barkas – Near Peeli Dargah</option></select></label>
-    <label>Preferred date<input name="date" type="date" required></label>
-    <label class="full">What do you need?<select name="service"><option>Eye examination</option><option>Eye-power check</option><option>Frames / spectacles</option><option>Lenses / optical enquiry</option><option>Other enquiry</option></select></label>
-    <label class="full">Additional note<textarea name="note" rows="3" maxlength="500" placeholder="Optional message"></textarea></label>
-    <button class="button gold full" type="submit">Send appointment request on WhatsApp</button>
-    <p class="form-note full" id="form-status" role="status">This is an appointment request, not a confirmed booking. The clinic will respond to confirm availability.</p>
-  </form>
-</section>
-
-<section class="section branches-section" id="branches">
-  <div class="section-heading"><span class="eyebrow">FIND US</span><h2>Our clinic locations</h2><p>Please contact us to confirm opening hours before visiting.</p></div>
-  <div class="branch-grid">
-    <article class="branch-card"><span class="branch-label">BRANCH 01</span><h3>Aliabad</h3><p>Near Aliabad Jhanda, beside Sardar Pan Shop, Hyderabad, Telangana 500065, India.</p><a href="https://maps.app.goo.gl/WnrZyj3w8fr3St4A6" target="_blank" rel="noopener">Open in Google Maps ↗</a></article>
-    <article class="branch-card"><span class="branch-label">BRANCH 02</span><h3>Barkas</h3><p>Beside Safia Hospital, opposite Fashion Freedom, Near Peeli Dargah, Salalah, Barkas, Hyderabad, Telangana 500005, India.</p><a href="https://maps.app.goo.gl/BbQ8kZG4db479jTT6" target="_blank" rel="noopener">Open in Google Maps ↗</a></article>
-  </div>
-</section>
-
-<section class="contact-band"><div><span class="eyebrow">HAVE A QUESTION?</span><h2>We're happy to help.</h2><p>Call or WhatsApp us for appointments and enquiries.</p><p class="contact-detail">Phone / WhatsApp: <a href="tel:+918555808382">+91 85558 08382</a><br>Email: <a href="mailto:uniquevisioneye@gmail.com">uniquevisioneye@gmail.com</a><br>Website: <a href="https://uveyeai.in" target="_blank" rel="noopener">uveyeai.in</a></p></div><a class="button gold" href="https://wa.me/918555808382" target="_blank" rel="noopener">WhatsApp: 8555808382</a></section>
-</main>
-<footer class="footer"><a class="brand footer-brand" href="#home"><span class="brand-mark">UV</span><span><strong>UNIQUE VISION</strong><small>EYE CLINIC & OPTICALS</small></span></a><div><a href="tel:+918555808382">+91 85558 08382</a><a href="mailto:uniquevisioneye@gmail.com">uniquevisioneye@gmail.com</a><a href="https://www.instagram.com/uniquevisioneye/" target="_blank" rel="noopener">Instagram @uniquevisioneye</a><a href="https://uveyeai.in" target="_blank" rel="noopener">uveyeai.in</a></div><p>Managed by SAYEED BIN WAJID BAWAZEER · D. Optometrist</p><p>© <span id="year"></span> UNIQUE VISION EYE CLINIC & OPTICALS. All rights reserved.</p><small>Website information is general. Please consult an eye-care professional for individual advice.</small></footer>
-<a class="floating-wa" href="https://wa.me/918555808382" target="_blank" rel="noopener" aria-label="Chat with Unique Vision on WhatsApp">WA</a>
-<script src="script.js"></script>
-</body></html>
+If the repository URL above does not open, open https://github.com/sayeeduv and select the website repository.
+Keep the repository public for free GitHub Pages on the GitHub Free plan.
+"""
+(out/"index.html").write_text(html, encoding="utf-8")
+(out/"README.txt").write_text(readme, encoding="utf-8")
+zip_path = Path("/mnt/data/unique_vision_free_website.zip")
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    z.write(out/"index.html", "index.html")
+    z.write(out/"README.txt", "README.txt")
+print("Created", zip_path, "and", out/"index.html")
