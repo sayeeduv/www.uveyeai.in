@@ -32,3 +32,15 @@ GitHub may take a few minutes to publish the first time.
 - Change text and addresses in `index.html`.
 - Change colours and layout in `styles.css` (main colours are near the top in `:root`).
 - Change WhatsApp destination in `script.js` and the WhatsApp links in `index.html` if the clinic number changes.
+
+## Business details included
+- Business: UNIQUE VISION EYE CLINIC & OPTICALS
+- Optometrist: SAYEED BIN WAJID BAWAZEER, D. Optometrist
+- Experience stated in the supplied profile: 7 years
+- Phone / WhatsApp: +91 85558 08382 (the older secondary number is not displayed)
+- Email: uniquevisioneye@gmail.com
+- Website: https://uveyeai.in
+- Instagram: https://www.instagram.com/uniquevisioneye/
+- Branches: Aliabad and Barkas, Hyderabad (map links included in the page)
+
+Opening hours, exact appointment slots, prices, and any additional services have not been invented. Add confirmed details to the page when ready.
